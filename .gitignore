@@ -1,0 +1,52 @@
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter & Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Data Files & Large Dumps (Never commit raw data)
+data/
+*.csv
+*.tsv
+*.zip
+*.rar
+*.tar.gz
+*.7z
+*.xml
+*.jsonl
+
+# Model Artifacts (Serialized weights & checkpoints)
+models_saved/*.joblib
+models_saved/*.pkl
+models_saved/*.json
+models_saved/*.bin
+models_saved/*.onnx
+!models_saved/.gitkeep
+
+# Environments & IDEs
+.env
+.venv
+env/
+venv/
+ENV/
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS Artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Output Reports Figures (Keep figures directory clean or tracked via gitkeep)
+reports/figures/*.png
+!reports/figures/.gitkeep
+reports/*.json
