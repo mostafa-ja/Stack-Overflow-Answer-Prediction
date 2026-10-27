@@ -41,18 +41,26 @@ def test_leave_one_out_ratio():
     # User 3 has count=1 < min_count=2 -> imputed with mean
     assert not np.isnan(loo.iloc[5])
 
-def test_load_dataset_realtime():
-    X, y = load_dataset(feature_set="realtime", n_samples=300, allow_synthetic_fallback=True)
+@pytest.fixture
+def temp_data_csv(tmp_path):
+    df = generate_synthetic_so_dataset(n_samples=300, random_state=42)
+    csv_path = tmp_path / "Accepted_df.csv"
+    df.to_csv(csv_path, index=False)
+    return str(csv_path)
+
+def test_load_dataset_realtime(temp_data_csv):
+    X, y = load_dataset(data_path=temp_data_csv, feature_set="realtime", n_samples=300)
     assert len(X) == 300
     assert len(y) == 300
     # Zero leakage: ensure post-hoc answer features are not in X
     assert "Score_A" not in X.columns
     assert "CommentCount_A" not in X.columns
 
-def test_load_dataset_full():
-    X, y = load_dataset(feature_set="full", n_samples=300, allow_synthetic_fallback=True)
+def test_load_dataset_full(temp_data_csv):
+    X, y = load_dataset(data_path=temp_data_csv, feature_set="full", n_samples=300)
     assert len(X) == 300
     assert "Score_A" in X.columns
+
 
 def test_train_val_test_splits():
     df = generate_synthetic_so_dataset(n_samples=400, random_state=42)
